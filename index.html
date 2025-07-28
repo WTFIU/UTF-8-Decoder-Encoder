@@ -1,61 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
   <title>UTF-8 Decoder & Encoder</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: monospace;
-      background: #111;
-      color: #eee;
+      background: #0e1012;
+      color: #e0e0e0;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 2rem;
       margin: 0;
-      padding: 20px;
     }
+
     h1 {
-      color: #8cf;
+      color: #70e0ff;
+      text-align: center;
+      font-size: 2rem;
+      margin-bottom: 1.5rem;
     }
+
+    label {
+      display: block;
+      margin: 1rem 0 0.3rem;
+      font-weight: bold;
+      color: #a0c0ff;
+    }
+
     textarea {
       width: 100%;
-      height: 120px;
-      background: #222;
-      color: #fff;
-      border: 1px solid #444;
-      margin-bottom: 10px;
-      padding: 10px;
-      font-size: 16px;
+      height: 130px;
+      padding: 1rem;
+      font-size: 1rem;
+      background: #1a1d22;
+      border: 2px solid #2c313a;
+      color: #ffffff;
+      border-radius: 8px;
       resize: vertical;
+      outline: none;
+      transition: border 0.3s;
     }
+
+    textarea:focus {
+      border-color: #70e0ff;
+    }
+
+    .buttons {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
     button {
-      padding: 10px 20px;
-      font-size: 16px;
-      background: #333;
+      background: #23272f;
       color: #fff;
       border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      border-radius: 6px;
       cursor: pointer;
-      margin: 5px;
+      transition: background 0.3s, box-shadow 0.3s;
     }
+
     button:hover {
-      background: #444;
+      background: #2d313a;
+      box-shadow: 0 0 10px #70e0ff33;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #777;
+    }
+
+    @media (max-width: 600px) {
+      textarea {
+        font-size: 0.9rem;
+      }
+
+      button {
+        width: 100%;
+      }
     }
   </style>
 </head>
 <body>
   <h1>🔣 UTF-8 Decoder & Encoder</h1>
 
-  <label>Normal Text:</label>
-  <textarea id="textInput" placeholder="Type normal text here..."></textarea>
+  <label for="textInput">Normal Text:</label>
+  <textarea id="textInput" placeholder="Type something like hello world..."></textarea>
 
-  <button onclick="encode()">🔄 Encode to UTF-8</button>
-  <button onclick="decode()">🔁 Decode from UTF-8</button>
+  <div class="buttons">
+    <button onclick="encode()">🔄 Encode to UTF-8</button>
+    <button onclick="decode()">🔁 Decode from UTF-8</button>
+  </div>
 
-  <label>UTF-8 Bytes (editable):</label>
-  <textarea id="utf8Output" placeholder="UTF-8 byte values will appear here..."></textarea>
+  <label for="utf8Output">UTF-8 Bytes (editable):</label>
+  <textarea id="utf8Output" placeholder="e.g., 68 65 6c 6c 6f"></textarea>
+
+  <footer>
+    Made with 💙 by wtifu | UTF-8 Tools
+  </footer>
 
   <script>
     function encode() {
       const input = document.getElementById('textInput').value;
       const utf8 = new TextEncoder().encode(input);
-      const byteString = Array.from(utf8).map(b => b.toString(16).padStart(2, '0')).join(' ');
+      const byteString = Array.from(utf8)
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join(' ');
       document.getElementById('utf8Output').value = byteString;
     }
 
@@ -66,7 +126,7 @@
         const decoded = new TextDecoder().decode(new Uint8Array(byteArr));
         document.getElementById('textInput').value = decoded;
       } catch (e) {
-        alert("Invalid UTF-8 byte sequence.");
+        alert("❌ Invalid UTF-8 byte sequence.");
       }
     }
   </script>
