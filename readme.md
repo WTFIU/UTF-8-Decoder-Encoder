@@ -19,4 +19,4 @@ A simple web-based tool to encode normal text into UTF-8 bytes and decode UTF-8 
 ## 🌐 GitHub Pages
 
 Hosted at:  
-**https://wtifu.github.io/UTF-8-Decoder-Encoder**
+**https://wtfiu.github.io/UTF-8-Decoder-Encoder**
