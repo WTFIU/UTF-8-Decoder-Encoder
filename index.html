@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>UTF-8 Decoder & Encoder</title>
+  <style>
+    body {
+      font-family: monospace;
+      background: #111;
+      color: #eee;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      color: #8cf;
+    }
+    textarea {
+      width: 100%;
+      height: 120px;
+      background: #222;
+      color: #fff;
+      border: 1px solid #444;
+      margin-bottom: 10px;
+      padding: 10px;
+      font-size: 16px;
+      resize: vertical;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #333;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      margin: 5px;
+    }
+    button:hover {
+      background: #444;
+    }
+  </style>
+</head>
+<body>
+  <h1>🔣 UTF-8 Decoder & Encoder</h1>
+
+  <label>Normal Text:</label>
+  <textarea id="textInput" placeholder="Type normal text here..."></textarea>
+
+  <button onclick="encode()">🔄 Encode to UTF-8</button>
+  <button onclick="decode()">🔁 Decode from UTF-8</button>
+
+  <label>UTF-8 Bytes (editable):</label>
+  <textarea id="utf8Output" placeholder="UTF-8 byte values will appear here..."></textarea>
+
+  <script>
+    function encode() {
+      const input = document.getElementById('textInput').value;
+      const utf8 = new TextEncoder().encode(input);
+      const byteString = Array.from(utf8).map(b => b.toString(16).padStart(2, '0')).join(' ');
+      document.getElementById('utf8Output').value = byteString;
+    }
+
+    function decode() {
+      const byteStr = document.getElementById('utf8Output').value.trim();
+      const byteArr = byteStr.split(/\s+/).map(h => parseInt(h, 16));
+      try {
+        const decoded = new TextDecoder().decode(new Uint8Array(byteArr));
+        document.getElementById('textInput').value = decoded;
+      } catch (e) {
+        alert("Invalid UTF-8 byte sequence.");
+      }
+    }
+  </script>
+</body>
+</html>
